@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest, ubuntu-latest]
+        platform: [windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
@@ -22,7 +22,7 @@ jobs:
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
-          auto-activate: false
+          auto-activate-base: false
           auto-update-conda: false
           activate-environment: wxenv
           channels: conda-forge,defaults
@@ -30,6 +30,9 @@ jobs:
       - name: Install wxWidgets
         run: |
           conda install -y conda-forge::wxwidgets
+
+      - name: Setup tmate
+        uses: mxschmitt/action-tmate@v3
 
       - name: Configure
         env:
