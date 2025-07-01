@@ -8,18 +8,22 @@ intended to demonstrate building projects using wxWidgets on GitHub Actions.
 - `hello.cpp`: A minimal wxWidgets "Hello World" GUI application written in C++.
 - `CMakeLists.txt`: CMake makefile for building it.
 
-## Requirements
+## Building on GitHub Actions
 
-You need wxWidgets development libraries available on your system. The included
-GitHub Actions workflow file uses [Miniconda](miniconda) to get wxWidgets, but
-you may use any other way locally, e.g. distribution packages under Linux,
-binaries downloaded from the wxWidgets website under Windows, packages
-installed by `brew` under macOS or a version of wxWidgets built from sources on
-any platform.
+The included GitHub Actions workflow file `.github/workflows/conda-cmake.yml`
+uses [Miniconda](miniconda) to install wxWidgets and then build the application
+using it, see there.
 
-## Building
+## Building Locally
 
-To build the application use the usual
+To work on the application locally, you need wxWidgets development libraries
+available on your system. You do _not_ need to use Miniconda to install them as
+the workflow above does, even if you may do it too, of course. But any other
+way, e.g. distribution packages under Linux, binaries downloaded from the
+wxWidgets website under Windows, packages installed by `brew` under macOS or a
+version of wxWidgets built from sources on any platform works too.
+
+Once wxWidgets is installed, build using CMake as usual, e.g.
 
 ```console
 > cmake -S . -B build

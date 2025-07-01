@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-activate-base: false
+          auto-update-conda: false
+          activate-environment: wxenv
+          channels: conda-forge,defaults
+
+      - name: Install wxWidgets
+        run: |
+          conda install -y conda-forge::wxwidgets
+
+      - name: Configure
+        env:
+          # This is used under Windows.
+          wxWidgets_ROOT_DIR: 'c:\Miniconda\envs\wxenv\Library'
+          # This is used under Unix.
+          WX_CONFIG: /usr/share/miniconda/bin/wx-config
+        run: |
+          cmake -S . -B build
+
+      - name: Build
+        run: |
+          cmake --build build
