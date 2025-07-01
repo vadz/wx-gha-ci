@@ -8,7 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 
-add_executable(hello hello.cpp)
+add_executable(hello WIN32 hello.cpp)
 
 # Include wxWidgets' use file if we don't use config mode.
 if(wxWidgets_USE_FILE)

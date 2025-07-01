@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [windows-latest]
+        platform: [windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Checkout
@@ -31,13 +31,10 @@ jobs:
         run: |
           conda install -y conda-forge::wxwidgets
 
-      - name: Setup tmate
-        uses: mxschmitt/action-tmate@v3
-
       - name: Configure
         env:
           # This is used under Windows.
-          wxWidgets_ROOT_DIR: c:\Miniconda\Library
+          wxWidgets_ROOT_DIR: 'c:\Miniconda\envs\wxenv\Library'
           # This is used under Unix.
           WX_CONFIG: /usr/share/miniconda/bin/wx-config
         run: |
