@@ -1,16 +1,10 @@
-name: Unix Build
+name: Build
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, windows-latest]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,8 +22,10 @@ jobs:
           conda install -y conda-forge::wxwidgets
 
       - name: Configure
+        env:
+          WX_CONFIG=$CONDA/bin/wx-config 
         run: |
-          WX_CONFIG=$CONDA/bin/wx-config cmake -S . -B build
+          cmake -S . -B build
 
       - name: Build
         run: |
