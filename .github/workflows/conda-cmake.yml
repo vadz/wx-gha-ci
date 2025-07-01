@@ -22,10 +22,10 @@ jobs:
       - name: Set up Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
+          auto-activate: false
           auto-update-conda: false
           activate-environment: wxenv
-          channels: conda-forge
-          conda-remove-defaults: true
+          channels: conda-forge,defaults
 
       - name: Install wxWidgets
         run: |
@@ -33,7 +33,10 @@ jobs:
 
       - name: Configure
         env:
-          WX_CONFIG: $CONDA/bin/wx-config 
+          # This is used under Windows.
+          wxWidgets_ROOT_DIR: c:\Miniconda\Library
+          # This is used under Unix.
+          WX_CONFIG: /usr/share/miniconda/bin/wx-config
         run: |
           cmake -S . -B build
 
