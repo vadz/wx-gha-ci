@@ -1,0 +1,36 @@
+name: Unix Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: false
+          activate-environment: wxenv
+          channels: conda-forge
+          conda-remove-defaults: true
+
+      - name: Install wxWidgets
+        run: |
+          conda install -y conda-forge::wxwidgets
+
+      - name: Configure
+        run: |
+          WX_CONFIG=$CONDA/bin/wx-config cmake -S . -B build
+
+      - name: Build
+        run: |
+          cmake --build build
