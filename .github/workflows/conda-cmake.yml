@@ -23,7 +23,7 @@ jobs:
 
       - name: Configure
         env:
-          WX_CONFIG=$CONDA/bin/wx-config 
+          WX_CONFIG: $CONDA/bin/wx-config 
         run: |
           cmake -S . -B build
 
